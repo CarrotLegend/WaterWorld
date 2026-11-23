@@ -1,6 +1,6 @@
 package com.carrot123.waterworld.mixin;
 
-import com.carrot123.waterworld.OceanSpawnPlatform;
+import com.carrot123.waterworld.worldgen.OceanSpawnPlatform;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;

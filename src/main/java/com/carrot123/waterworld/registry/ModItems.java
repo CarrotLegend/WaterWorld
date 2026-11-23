@@ -1,5 +1,7 @@
-package com.carrot123.waterworld;
+package com.carrot123.waterworld.registry;
 
+import com.carrot123.waterworld.item.ElectricEelGeneratorItem;
+import com.carrot123.waterworld.item.SeawaterFilterItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.Foods;
@@ -21,6 +23,10 @@ public class ModItems {
 
     @SubscribeEvent
     public static void registerItems(RegisterEvent event) {
+        event.register(Registries.ITEM, ModBlocks.SEAWATER_FILTER.getId(),
+                () -> new SeawaterFilterItem(ModBlocks.SEAWATER_FILTER.get(), new Item.Properties()));
+        event.register(Registries.ITEM, ModBlocks.ELECTRIC_EEL_GENERATOR.getId(),
+                () -> new ElectricEelGeneratorItem(ModBlocks.ELECTRIC_EEL_GENERATOR.get(), new Item.Properties()));
         event.register(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("waterworld", "fishing_box"),
                 () -> new BlockItem(ModBlocks.FISHING_BOX.get(), new Item.Properties()));
         event.register(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("waterworld", "advanced_fishing_box"),

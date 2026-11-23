@@ -1,5 +1,9 @@
-package com.carrot123.waterworld;
+package com.carrot123.waterworld.registry;
 
+import com.carrot123.waterworld.block.ElectricEelGeneratorBlock;
+import com.carrot123.waterworld.block.FishingBoxBlock;
+import com.carrot123.waterworld.block.RecyclingStationBlock;
+import com.carrot123.waterworld.block.SeawaterFilterBlock;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -13,6 +17,10 @@ import net.minecraftforge.registries.RegistryObject;
 
 @Mod.EventBusSubscriber(modid = "waterworld", bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModBlocks {
+    public static final RegistryObject<Block> SEAWATER_FILTER = RegistryObject.create(
+            ResourceLocation.fromNamespaceAndPath("waterworld", "seawater_filter"), Registries.BLOCK, "waterworld");
+    public static final RegistryObject<Block> ELECTRIC_EEL_GENERATOR = RegistryObject.create(
+            ResourceLocation.fromNamespaceAndPath("waterworld", "electric_eel_generator"), Registries.BLOCK, "waterworld");
     public static final RegistryObject<Block> RECYCLING_STATION = RegistryObject.create(
             ResourceLocation.fromNamespaceAndPath("waterworld", "recycling_station"), Registries.BLOCK, "waterworld");
     public static final RegistryObject<Block> FISHING_BOX = RegistryObject.create(
@@ -22,6 +30,10 @@ public class ModBlocks {
 
     @SubscribeEvent
     public static void registerBlocks(RegisterEvent event) {
+        event.register(Registries.BLOCK, SEAWATER_FILTER.getId(), () -> new SeawaterFilterBlock(
+                BlockBehaviour.Properties.of().strength(3.0F, 5.0F).sound(SoundType.WOOD)));
+        event.register(Registries.BLOCK, ELECTRIC_EEL_GENERATOR.getId(), () -> new ElectricEelGeneratorBlock(
+                BlockBehaviour.Properties.of().strength(4.0F, 6.0F).sound(SoundType.METAL)));
         event.register(Registries.BLOCK, RECYCLING_STATION.getId(), () -> new RecyclingStationBlock(
                 BlockBehaviour.Properties.of().strength(2.0F).sound(SoundType.WOOD).noOcclusion()));
         event.register(Registries.BLOCK, FISHING_BOX.getId(), () -> new FishingBoxBlock(false,

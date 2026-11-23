@@ -1,6 +1,6 @@
 package com.carrot123.waterworld.mixin;
 
-import com.carrot123.waterworld.OceanWorld;
+import com.carrot123.waterworld.worldgen.OceanWorld;
 import mcjty.lostcities.config.ProfileSetup;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

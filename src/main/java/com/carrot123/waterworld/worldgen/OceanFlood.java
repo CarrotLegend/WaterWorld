@@ -1,4 +1,4 @@
-package com.carrot123.waterworld;
+package com.carrot123.waterworld.worldgen;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;

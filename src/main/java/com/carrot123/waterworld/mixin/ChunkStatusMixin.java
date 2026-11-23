@@ -1,7 +1,7 @@
 package com.carrot123.waterworld.mixin;
 
-import com.carrot123.waterworld.OceanFlood;
-import com.carrot123.waterworld.OceanWorld;
+import com.carrot123.waterworld.worldgen.OceanFlood;
+import com.carrot123.waterworld.worldgen.OceanWorld;
 import com.mojang.datafixers.util.Either;
 import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.server.level.ServerLevel;

@@ -1,4 +1,4 @@
-package com.carrot123.waterworld;
+package com.carrot123.waterworld.worldgen;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -14,7 +14,7 @@ public class OceanSpawnPlatform extends SavedData {
     private static final BlockPos SPAWN = new BlockPos(8, OceanWorld.SEA + 1, 8);
     private static final float ANGLE = 0.0F;
 
-    static void create(LevelEvent.CreateSpawnPosition event) {
+    public static void create(LevelEvent.CreateSpawnPosition event) {
         if (!(event.getLevel() instanceof ServerLevel level) || !OceanWorld.isOcean(level)) {
             return;
         }

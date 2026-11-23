@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SXS",
+    "WCW",
+    "WGW"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:string"
+    },
+    "X": {
+      "item": "waterworld:plastic"
+    },
+    "W": {
+      "tag": "minecraft:planks"
+    },
+    "C": {
+      "item": "minecraft:charcoal"
+    },
+    "G": {
+      "item": "minecraft:gravel"
+    }
+  },
+  "result": {
+    "item": "waterworld:seawater_filter",
+    "count": 1
+  }
+}

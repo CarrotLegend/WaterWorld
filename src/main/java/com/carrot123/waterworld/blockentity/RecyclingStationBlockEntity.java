@@ -1,5 +1,7 @@
-package com.carrot123.waterworld;
+package com.carrot123.waterworld.blockentity;
 
+import com.carrot123.waterworld.registry.ModBlockEntities;
+import com.carrot123.waterworld.registry.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -20,11 +22,11 @@ public class RecyclingStationBlockEntity extends BlockEntity {
         return storedItem.copy();
     }
 
-    boolean isEmpty() {
+    public boolean isEmpty() {
         return storedItem.isEmpty();
     }
 
-    boolean insertScrap(ItemStack stack) {
+    public boolean insertScrap(ItemStack stack) {
         if (level == null || level.isClientSide || !isEmpty() || !stack.is(ModItems.SCRAP_IRON.get())) {
             return false;
         }
@@ -33,7 +35,7 @@ public class RecyclingStationBlockEntity extends BlockEntity {
         return true;
     }
 
-    ItemStack takeScrap() {
+    public ItemStack takeScrap() {
         if (level == null || level.isClientSide || isEmpty()) {
             return ItemStack.EMPTY;
         }
@@ -42,7 +44,7 @@ public class RecyclingStationBlockEntity extends BlockEntity {
         return result;
     }
 
-    ItemStack clearForRemoval() {
+    public ItemStack clearForRemoval() {
         ItemStack result = storedItem;
         storedItem = ItemStack.EMPTY;
         return result;

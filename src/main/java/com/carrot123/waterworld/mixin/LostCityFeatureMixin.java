@@ -1,6 +1,6 @@
 package com.carrot123.waterworld.mixin;
 
-import com.carrot123.waterworld.OceanWorld;
+import com.carrot123.waterworld.worldgen.OceanWorld;
 import mcjty.lostcities.setup.Config;
 import mcjty.lostcities.worldgen.LostCityFeature;
 import net.minecraft.resources.ResourceKey;

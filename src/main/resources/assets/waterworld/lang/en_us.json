@@ -1,6 +1,9 @@
 {
+  "itemGroup.waterworld.main": "WaterWorld",
+  "block.waterworld.seawater_filter": "Seawater Filter",
   "generator.waterworld.ocean_world": "Ocean World",
   "item.waterworld.electric_eel": "Electric Eel",
+  "block.waterworld.electric_eel_generator": "Electric Eel Generator",
   "item.waterworld.plastic": "Plastic",
   "item.waterworld.screw": "Screw",
   "item.waterworld.scrap_iron": "Scrap Iron",

@@ -1,6 +1,9 @@
 {
+  "itemGroup.waterworld.main": "深水世界",
+  "block.waterworld.seawater_filter": "海水过滤器",
   "generator.waterworld.ocean_world": "海洋世界",
   "item.waterworld.electric_eel": "电鳗",
+  "block.waterworld.electric_eel_generator": "电鳗发电机",
   "item.waterworld.plastic": "塑料",
   "item.waterworld.screw": "螺丝",
   "item.waterworld.scrap_iron": "废铁",

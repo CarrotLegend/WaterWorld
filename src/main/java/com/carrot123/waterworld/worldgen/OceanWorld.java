@@ -1,4 +1,4 @@
-package com.carrot123.waterworld;
+package com.carrot123.waterworld.worldgen;
 
 import mcjty.lostcities.config.LostCityProfile;
 import mcjty.lostcities.config.LostCityProfileSetupImp;

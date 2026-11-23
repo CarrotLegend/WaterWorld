@@ -1,6 +1,6 @@
 package com.carrot123.waterworld.mixin;
 
-import com.carrot123.waterworld.OceanWorld;
+import com.carrot123.waterworld.worldgen.OceanWorld;
 import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
 import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import org.spongepowered.asm.mixin.Final;

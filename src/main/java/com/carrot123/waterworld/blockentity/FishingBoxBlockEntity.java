@@ -1,5 +1,7 @@
-package com.carrot123.waterworld;
+package com.carrot123.waterworld.blockentity;
 
+import com.carrot123.waterworld.block.FishingBoxBlock;
+import com.carrot123.waterworld.registry.ModBlockEntities;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

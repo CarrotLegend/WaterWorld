@@ -1,5 +1,7 @@
-package com.carrot123.waterworld;
+package com.carrot123.waterworld.block;
 
+import com.carrot123.waterworld.blockentity.RecyclingStationBlockEntity;
+import com.carrot123.waterworld.registry.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -34,7 +36,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class RecyclingStationBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    static final double SURFACE_Y = 12.0D / 16.0D;
+    public static final double SURFACE_Y = 12.0D / 16.0D;
     private static final VoxelShape SHAPE = Shapes.or(box(0, 9, 0, 16, 12, 16),
             box(1, 0, 1, 4, 9, 4), box(12, 0, 1, 15, 9, 4),
             box(1, 0, 12, 4, 9, 15), box(12, 0, 12, 15, 9, 15));

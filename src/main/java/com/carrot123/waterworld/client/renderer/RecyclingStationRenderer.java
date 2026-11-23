@@ -1,5 +1,8 @@
-package com.carrot123.waterworld;
+package com.carrot123.waterworld.client.renderer;
 
+import com.carrot123.waterworld.block.RecyclingStationBlock;
+import com.carrot123.waterworld.blockentity.RecyclingStationBlockEntity;
+import com.carrot123.waterworld.registry.ModBlockEntities;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;

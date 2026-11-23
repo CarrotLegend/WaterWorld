@@ -1,5 +1,7 @@
-package com.carrot123.waterworld;
+package com.carrot123.waterworld.block;
 
+import com.carrot123.waterworld.blockentity.FishingBoxBlockEntity;
+import com.carrot123.waterworld.registry.ModBlockEntities;
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
