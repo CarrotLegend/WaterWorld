@@ -1,3 +1,13 @@
 {
-  "generator.waterworld.ocean_world": "海洋世界"
+  "generator.waterworld.ocean_world": "海洋世界",
+  "item.waterworld.electric_eel": "电鳗",
+  "item.waterworld.plastic": "塑料",
+  "item.waterworld.screw": "螺丝",
+  "item.waterworld.scrap_iron": "废铁",
+  "block.waterworld.recycling_station": "回收站",
+  "item.waterworld.recycling_hammer": "回收锤",
+  "block.waterworld.fishing_box": "捕鱼箱",
+  "block.waterworld.advanced_fishing_box": "高级捕鱼箱",
+  "tooltip.waterworld.fishing_box": "每10s进行一次打捞。",
+  "tooltip.waterworld.advanced_fishing_box": "每10s进行一次高质量打捞。"
 }
