@@ -32,7 +32,7 @@ public class ChunkStatusMixin {
         if ((Object) this == ChunkStatus.LIGHT && level.dimension().equals(Level.OVERWORLD) && OceanWorld.isOcean(generator)) {
             ChunkAccess chunk = chunks.get(chunks.size() / 2);
             if (!chunk.getStatus().isOrAfter(ChunkStatus.LIGHT)) {
-                OceanFlood.finish(chunk);
+                OceanFlood.finish(chunk, OceanWorld.sea(generator), OceanWorld.isLayered(generator));
             }
         }
     }

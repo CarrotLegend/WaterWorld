@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IDI",
+    "IBI",
+    "IDI"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "B": {
+      "item": "waterworld:fishing_box"
+    }
+  },
+  "result": {
+    "item": "waterworld:advanced_fishing_box",
+    "count": 1
+  }
+}

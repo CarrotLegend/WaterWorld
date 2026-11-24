@@ -1,0 +1,29 @@
+{
+  "required": true,
+  "minVersion": "0.8.5",
+  "package": "com.carrot123.waterworld.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "waterworld.refmap.json",
+  "mixins": [
+    "ProfileSetupMixin",
+    "LostCityFeatureMixin",
+    "DefaultDimensionInfoMixin",
+    "LostBuildingBoundsMixin",
+    "LostCityRegionMixin",
+    "LostBridgeBoundsMixin",
+    "LostHighwayBoundsMixin",
+    "LostRailwayBoundsMixin",
+    "LostTerrainHeightMixin",
+    "LostDamageHeightMixin",
+    "ChunkStatusMixin",
+    "LevelChunkMixin",
+    "DedicatedServerPropertiesMixin",
+    "PlayerListMixin"
+  ],
+  "client": [
+    "CreateWorldScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

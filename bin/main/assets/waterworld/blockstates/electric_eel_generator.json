@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,secondary=false": {
+      "model": "waterworld:block/electric_eel_generator"
+    },
+    "facing=north,secondary=true": {
+      "model": "waterworld:block/electric_eel_generator_secondary"
+    },
+    "facing=east,secondary=false": {
+      "model": "waterworld:block/electric_eel_generator",
+      "y": 90
+    },
+    "facing=east,secondary=true": {
+      "model": "waterworld:block/electric_eel_generator_secondary",
+      "y": 90
+    },
+    "facing=south,secondary=false": {
+      "model": "waterworld:block/electric_eel_generator",
+      "y": 180
+    },
+    "facing=south,secondary=true": {
+      "model": "waterworld:block/electric_eel_generator_secondary",
+      "y": 180
+    },
+    "facing=west,secondary=false": {
+      "model": "waterworld:block/electric_eel_generator",
+      "y": 270
+    },
+    "facing=west,secondary=true": {
+      "model": "waterworld:block/electric_eel_generator_secondary",
+      "y": 270
+    }
+  }
+}

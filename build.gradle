@@ -41,13 +41,16 @@ repositories {
     mavenCentral()
     maven {
         url = 'https://www.cursemaven.com'
-        content { includeModule('curse.maven', 'thirst-was-taken-679270') }
+        content {
+            includeModule('curse.maven', 'thirst-was-taken-679270')
+            includeModule('curse.maven', 'the-lost-cities-269024')
+        }
     }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.20.1-47.4.20'
-    implementation fg.deobf('local:lostcities:1.20-7.5.8')
+    implementation fg.deobf('curse.maven:the-lost-cities-269024:9730699')
     compileOnly fg.deobf('curse.maven:thirst-was-taken-679270:6660408')
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }

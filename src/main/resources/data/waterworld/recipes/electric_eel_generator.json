@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GGG",
+    "GEG",
+    "GGG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "E": {
+      "item": "waterworld:electric_eel"
+    }
+  },
+  "result": {
+    "item": "waterworld:electric_eel_generator",
+    "count": 1
+  }
+}

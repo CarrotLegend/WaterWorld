@@ -17,13 +17,19 @@ import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.chunk.ChunkAccess;
 
 public class OceanFlood {
-    public static void finish(ChunkAccess chunk) {
-        settleGravity(chunk);
+    public static void finish(ChunkAccess chunk, int sea, boolean skipSections) {
+        settleGravity(chunk, sea, skipSections);
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
         BlockState water = Blocks.WATER.defaultBlockState();
         int minX = chunk.getPos().getMinBlockX();
         int minZ = chunk.getPos().getMinBlockZ();
-        for (int y = chunk.getMinBuildHeight(); y <= OceanWorld.SEA; y++) {
+        for (int y = chunk.getMinBuildHeight(); y <= sea; y++) {
+            if (skipSections && (y & 15) == 0 && !chunk.getSection(chunk.getSectionIndex(y)).maybeHas(state ->
+                    state.hasProperty(BlockStateProperties.WATERLOGGED)
+                            || (!state.equals(water) && !state.hasBlockEntity() && isFloodable(state)))) {
+                y += 15;
+                continue;
+            }
             for (int x = 0; x < 16; x++) {
                 for (int z = 0; z < 16; z++) {
                     pos.set(minX + x, y, minZ + z);
@@ -45,14 +51,24 @@ public class OceanFlood {
         chunk.initializeLightSources();
     }
 
-    private static void settleGravity(ChunkAccess chunk) {
+    private static void settleGravity(ChunkAccess chunk, int sea, boolean skipSections) {
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
         BlockPos.MutableBlockPos below = new BlockPos.MutableBlockPos();
         int minX = chunk.getPos().getMinBlockX();
         int minZ = chunk.getPos().getMinBlockZ();
+        boolean[] falling = new boolean[chunk.getSectionsCount()];
+        if (skipSections) {
+            for (int index = 0; index < falling.length; index++) {
+                falling[index] = chunk.getSection(index).maybeHas(state -> state.getBlock() instanceof FallingBlock);
+            }
+        }
         for (int x = minX; x < minX + 16; x++) {
             for (int z = minZ; z < minZ + 16; z++) {
-                for (int y = chunk.getMinBuildHeight() + 1; y <= OceanWorld.SEA; y++) {
+                for (int y = chunk.getMinBuildHeight() + 1; y <= sea; y++) {
+                    if (skipSections && !falling[chunk.getSectionIndex(y)]) {
+                        y |= 15;
+                        continue;
+                    }
                     pos.set(x, y, z);
                     BlockState state = chunk.getBlockState(pos);
                     if (!(state.getBlock() instanceof FallingBlock)) {

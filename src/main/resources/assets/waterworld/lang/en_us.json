@@ -1,4 +1,5 @@
 {
+  "generator.waterworld.layered_ocean": "Layered Ocean World",
   "itemGroup.waterworld.main": "WaterWorld",
   "block.waterworld.seawater_filter": "Seawater Filter",
   "generator.waterworld.ocean_world": "Ocean World",

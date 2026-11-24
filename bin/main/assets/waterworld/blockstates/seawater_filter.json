@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "waterworld:block/seawater_filter_lower"
+    },
+    "half=upper": {
+      "model": "waterworld:block/seawater_filter_upper"
+    }
+  }
+}

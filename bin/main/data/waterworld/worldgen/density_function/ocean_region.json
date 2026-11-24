@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:flat_cache",
+  "argument": {
+    "type": "waterworld:ocean_region",
+    "noise": "waterworld:ocean_regions"
+  }
+}

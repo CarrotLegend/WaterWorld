@@ -1,0 +1,17 @@
+{
+  "generator.waterworld.layered_ocean": "Layered Ocean World",
+  "itemGroup.waterworld.main": "WaterWorld",
+  "block.waterworld.seawater_filter": "Seawater Filter",
+  "generator.waterworld.ocean_world": "Ocean World",
+  "item.waterworld.electric_eel": "Electric Eel",
+  "block.waterworld.electric_eel_generator": "Electric Eel Generator",
+  "item.waterworld.plastic": "Plastic",
+  "item.waterworld.screw": "Screw",
+  "item.waterworld.scrap_iron": "Scrap Iron",
+  "block.waterworld.recycling_station": "Recycling Station",
+  "item.waterworld.recycling_hammer": "Recycling Hammer",
+  "block.waterworld.fishing_box": "Fishing Box",
+  "block.waterworld.advanced_fishing_box": "Advanced Fishing Box",
+  "tooltip.waterworld.fishing_box": "Collects a catch every 10s.",
+  "tooltip.waterworld.advanced_fishing_box": "Collects a high-quality catch every 10s."
+}
