@@ -1,5 +1,11 @@
 {
   "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "immersiveengineering"
+    }
+  ],
   "category": "misc",
   "pattern": [
     "LVL",
@@ -8,7 +14,7 @@
   ],
   "key": {
     "L": {
-      "item": "waterworld:aluminum_ingot"
+      "item": "immersiveengineering:ingot_aluminum"
     },
     "V": {
       "item": "minecraft:piston"

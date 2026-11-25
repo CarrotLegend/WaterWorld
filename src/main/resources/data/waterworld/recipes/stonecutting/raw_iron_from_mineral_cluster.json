@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "waterworld:mineral_cluster"
+  },
+  "result": "minecraft:raw_iron",
+  "count": 1
+}

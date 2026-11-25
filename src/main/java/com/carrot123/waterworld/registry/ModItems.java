@@ -67,7 +67,7 @@ public class ModItems {
                 () -> new Item(new Item.Properties().stacksTo(64).food(Foods.TROPICAL_FISH)));
         event.register(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("waterworld", "plastic"),
                 () -> new Item(new Item.Properties().stacksTo(64)));
-        for (String material : List.of("rubber", "raw_titanium", "titanium_ingot", "raw_aluminum", "aluminum_ingot",
+        for (String material : List.of("rubber", "raw_titanium", "titanium_ingot", "mineral_cluster",
                 "titanium_alloy_ingot", "synthetic_fiber", "carbon_fiber", "circuit_board", "advanced_circuit_board")) {
             event.register(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("waterworld", material),
                     () -> new Item(new Item.Properties().stacksTo(64)));

@@ -6,7 +6,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:name_tag"
+          "name": "minecraft:name_tag",
+          "weight": 5
         },
         {
           "type": "minecraft:item",
@@ -45,27 +46,33 @@
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:nautilus_shell"
+          "name": "minecraft:nautilus_shell",
+          "weight": 5
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:heart_of_the_sea",
-          "weight": 1
+          "weight": 3
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:netherite_scrap",
-          "weight": 1
+          "weight": 2
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:diamond",
-          "weight": 1
+          "weight": 2
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:nether_star",
           "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "waterworld:circuit_board",
+          "weight": 3
         }
       ],
       "rolls": 1.0

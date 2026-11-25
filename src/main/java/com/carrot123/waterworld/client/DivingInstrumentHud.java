@@ -64,7 +64,11 @@ public final class DivingInstrumentHud {
             return;
         }
         graphics.pose().pushPose();
-        graphics.pose().translate(screenWidth - 6 - width * scale, 8, 0);
+        graphics.pose().translate(
+                screenWidth - 6 - width * scale,
+                (screenHeight - height * scale) / 2.0F,
+                0
+        );
         graphics.pose().scale(scale, scale, 1.0F);
         graphics.fill(0, 0, width, height, 0xe6152d44);
         graphics.fill(0, 0, 2, height, 0xff58bde7);

@@ -46,6 +46,18 @@
         },
         {
           "type": "minecraft:item",
+          "name": "waterworld:mineral_cluster",
+          "weight": 5,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 4,
+              "add": false
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:kelp",
           "weight": 7
         },
@@ -64,6 +76,12 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:wheat_seeds",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:tag",
+          "name": "waterworld:fishing/hemp_seeds",
+          "expand": true,
           "weight": 4
         },
         {
