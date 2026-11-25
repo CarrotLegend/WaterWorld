@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "A A",
+    "FHF",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "waterworld:titanium_alloy_ingot"
+    },
+    "F": {
+      "item": "waterworld:carbon_fiber"
+    },
+    "H": {
+      "item": "waterworld:advanced_circuit_board"
+    }
+  },
+  "result": {
+    "item": "waterworld:abyssal_diving_chestplate",
+    "count": 1
+  }
+}

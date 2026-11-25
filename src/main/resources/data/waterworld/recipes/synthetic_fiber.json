@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "waterworld:plastic"
+    },
+    {
+      "item": "waterworld:plastic"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "minecraft:string"
+    }
+  ],
+  "result": {
+    "item": "waterworld:synthetic_fiber",
+    "count": 1
+  }
+}

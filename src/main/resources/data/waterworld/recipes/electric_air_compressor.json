@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "LVL",
+    "CMC",
+    "IEI"
+  ],
+  "key": {
+    "L": {
+      "item": "waterworld:aluminum_ingot"
+    },
+    "V": {
+      "item": "minecraft:piston"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "M": {
+      "item": "waterworld:manual_air_compressor"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "E": {
+      "item": "waterworld:circuit_board"
+    }
+  },
+  "result": {
+    "item": "waterworld:electric_air_compressor",
+    "count": 1
+  }
+}

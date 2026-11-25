@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "T T",
+    "TET",
+    "TST"
+  ],
+  "key": {
+    "T": {
+      "item": "waterworld:titanium_ingot"
+    },
+    "E": {
+      "item": "waterworld:circuit_board"
+    },
+    "S": {
+      "item": "waterworld:synthetic_fiber"
+    }
+  },
+  "result": {
+    "item": "waterworld:atmospheric_diving_chestplate",
+    "count": 1
+  }
+}

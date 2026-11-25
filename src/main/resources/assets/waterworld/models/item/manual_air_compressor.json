@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "minecraft:item/shears"
+    "layer0": "waterworld:item/manual_air_compressor"
   }
 }

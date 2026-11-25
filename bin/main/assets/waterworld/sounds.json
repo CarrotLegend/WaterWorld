@@ -1,0 +1,10 @@
+{
+  "fishing_treasure": {
+    "sounds": [
+      { "name": "waterworld:yinxiao1", "weight": 1 },
+      { "name": "waterworld:yinxiao2", "weight": 1 },
+      { "name": "waterworld:yinxiao3", "weight": 1 },
+      { "name": "waterworld:yinxiao4", "weight": 1 }
+    ]
+  }
+}

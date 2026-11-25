@@ -23,12 +23,15 @@ public final class WaterPressure {
     }
 
     public static double environmentalPressure(ServerLevel level, Player player) {
+        return pressure(environmentalDepth(level, player));
+    }
+
+    public static double environmentalDepth(ServerLevel level, Player player) {
         if (!player.isInWater()) {
-            return pressure(0.0D);
+            return 0.0D;
         }
-        double depth = OceanWorld.isOcean(level)
+        return OceanWorld.isOcean(level)
                 ? depth(level, player.getY()) : depthBelow(level.getSeaLevel(), player.getY());
-        return pressure(depth);
     }
 
     private static double depthBelow(double sea, double y) {

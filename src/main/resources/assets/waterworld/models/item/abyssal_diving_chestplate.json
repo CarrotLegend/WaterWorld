@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "minecraft:item/diamond_chestplate"
+    "layer0": "waterworld:item/abyssal_diving_chestplate"
   }
 }

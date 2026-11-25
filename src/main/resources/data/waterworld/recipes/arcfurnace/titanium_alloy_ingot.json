@@ -1,0 +1,27 @@
+{
+  "type": "immersiveengineering:arc_furnace",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "immersiveengineering"
+    }
+  ],
+  "input": {
+    "base_ingredient": {
+      "item": "waterworld:titanium_ingot"
+    },
+    "count": 3
+  },
+  "additives": [
+    {
+      "item": "waterworld:aluminum_ingot"
+    }
+  ],
+  "results": [
+    {
+      "item": "waterworld:titanium_alloy_ingot"
+    }
+  ],
+  "energy": 51200,
+  "time": 100
+}

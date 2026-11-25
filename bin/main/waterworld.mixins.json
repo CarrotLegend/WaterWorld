@@ -18,7 +18,12 @@
     "ChunkStatusMixin",
     "LevelChunkMixin",
     "DedicatedServerPropertiesMixin",
-    "PlayerListMixin"
+    "PlayerListMixin",
+    "OceanSurfaceClimateMixin",
+    "HeatPurificationRecipeMixin",
+    "DivingChestplateBreakMixin",
+    "FishingHookTreasureMixin",
+    "FishingTreasureLootMixin"
   ],
   "client": [
     "CreateWorldScreenMixin"

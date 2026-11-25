@@ -40,6 +40,10 @@ repositories {
     flatDir { dirs 'libs' }
     mavenCentral()
     maven {
+        url = 'https://maven.theillusivec4.top/'
+        content { includeGroup('top.theillusivec4.curios') }
+    }
+    maven {
         url = 'https://www.cursemaven.com'
         content {
             includeModule('curse.maven', 'thirst-was-taken-679270')
@@ -50,6 +54,8 @@ repositories {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.20.1-47.4.20'
+    compileOnly fg.deobf('top.theillusivec4.curios:curios-forge:5.14.1+1.20.1:api')
+    runtimeOnly fg.deobf('top.theillusivec4.curios:curios-forge:5.14.1+1.20.1')
     implementation fg.deobf('curse.maven:the-lost-cities-269024:9730699')
     compileOnly fg.deobf('curse.maven:thirst-was-taken-679270:6660408')
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'

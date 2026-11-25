@@ -1,0 +1,36 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:false"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:campfire_cooking",
+        "ingredient": [
+          {
+            "type": "forge:nbt",
+            "item": "minecraft:potion",
+            "nbt": "{Potion:'minecraft:water',Purity:0}"
+          },
+          {
+            "type": "forge:nbt",
+            "item": "minecraft:potion",
+            "nbt": "{Potion:'minecraft:water',Purity:-1}"
+          }
+        ],
+        "result": {
+          "item": "minecraft:potion",
+          "nbt": {
+            "Potion": "minecraft:water",
+            "Purity": 1
+          }
+        },
+        "experience": 0.35,
+        "cookingtime": 300
+      }
+    }
+  ]
+}

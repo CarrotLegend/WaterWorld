@@ -2,6 +2,7 @@ package com.carrot123.waterworld.registry;
 
 import com.carrot123.waterworld.blockentity.ElectricEelGeneratorBlockEntity;
 import com.carrot123.waterworld.blockentity.FishingBoxBlockEntity;
+import com.carrot123.waterworld.blockentity.OxygenMachineBlockEntity;
 import com.carrot123.waterworld.blockentity.RecyclingStationBlockEntity;
 import com.carrot123.waterworld.blockentity.SeawaterFilterBlockEntity;
 import net.minecraft.core.registries.Registries;
@@ -23,9 +24,17 @@ public class ModBlockEntities {
                     Registries.BLOCK_ENTITY_TYPE, "waterworld");
     public static final RegistryObject<BlockEntityType<RecyclingStationBlockEntity>> RECYCLING_STATION =
             RegistryObject.create(ModBlocks.RECYCLING_STATION.getId(), Registries.BLOCK_ENTITY_TYPE, "waterworld");
+    public static final RegistryObject<BlockEntityType<OxygenMachineBlockEntity>> ELECTRIC_AIR_COMPRESSOR =
+            RegistryObject.create(ModBlocks.ELECTRIC_AIR_COMPRESSOR.getId(), Registries.BLOCK_ENTITY_TYPE, "waterworld");
+    public static final RegistryObject<BlockEntityType<OxygenMachineBlockEntity>> ELECTROLYTIC_OXYGEN_GENERATOR =
+            RegistryObject.create(ModBlocks.ELECTROLYTIC_OXYGEN_GENERATOR.getId(), Registries.BLOCK_ENTITY_TYPE, "waterworld");
 
     @SubscribeEvent
     public static void registerBlockEntities(RegisterEvent event) {
+        event.register(Registries.BLOCK_ENTITY_TYPE, ELECTRIC_AIR_COMPRESSOR.getId(), () -> BlockEntityType.Builder.of(
+                OxygenMachineBlockEntity::new, ModBlocks.ELECTRIC_AIR_COMPRESSOR.get()).build(null));
+        event.register(Registries.BLOCK_ENTITY_TYPE, ELECTROLYTIC_OXYGEN_GENERATOR.getId(), () -> BlockEntityType.Builder.of(
+                OxygenMachineBlockEntity::new, ModBlocks.ELECTROLYTIC_OXYGEN_GENERATOR.get()).build(null));
         event.register(Registries.BLOCK_ENTITY_TYPE, SEAWATER_FILTER.getId(),
                 () -> BlockEntityType.Builder.of(SeawaterFilterBlockEntity::new, ModBlocks.SEAWATER_FILTER.get()).build(null));
         event.register(Registries.BLOCK_ENTITY_TYPE, ELECTRIC_EEL_GENERATOR.getId(),

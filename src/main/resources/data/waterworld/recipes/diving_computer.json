@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PGP",
+    "DQD",
+    "CEC"
+  ],
+  "key": {
+    "P": {
+      "item": "waterworld:plastic"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "D": {
+      "item": "minecraft:redstone"
+    },
+    "Q": {
+      "item": "waterworld:pressure_gauge"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "E": {
+      "item": "waterworld:circuit_board"
+    }
+  },
+  "result": {
+    "item": "waterworld:diving_computer",
+    "count": 1
+  }
+}

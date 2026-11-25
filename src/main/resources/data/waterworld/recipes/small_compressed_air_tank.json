@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " C ",
+    "IRI",
+    "III"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "R": {
+      "item": "waterworld:rubber"
+    }
+  },
+  "result": {
+    "item": "waterworld:small_compressed_air_tank",
+    "count": 1
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GHG",
+    "CWC",
+    "TBT"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "H": {
+      "item": "waterworld:advanced_circuit_board"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "W": {
+      "item": "minecraft:water_bucket"
+    },
+    "T": {
+      "item": "waterworld:titanium_ingot"
+    },
+    "B": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "result": {
+    "item": "waterworld:electrolytic_oxygen_generator",
+    "count": 1
+  }
+}

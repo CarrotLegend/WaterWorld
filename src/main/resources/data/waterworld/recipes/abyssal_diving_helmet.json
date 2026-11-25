@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "AAA",
+    "AGA",
+    "FHF"
+  ],
+  "key": {
+    "A": {
+      "item": "waterworld:titanium_alloy_ingot"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "F": {
+      "item": "waterworld:carbon_fiber"
+    },
+    "H": {
+      "item": "waterworld:advanced_circuit_board"
+    }
+  },
+  "result": {
+    "item": "waterworld:abyssal_diving_helmet",
+    "count": 1
+  }
+}

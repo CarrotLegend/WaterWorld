@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " I ",
+    "CVC",
+    "IRI"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "V": {
+      "item": "minecraft:piston"
+    },
+    "R": {
+      "item": "waterworld:rubber"
+    }
+  },
+  "result": {
+    "item": "waterworld:manual_air_compressor",
+    "count": 1
+  }
+}

@@ -21,7 +21,9 @@
     "PlayerListMixin",
     "OceanSurfaceClimateMixin",
     "HeatPurificationRecipeMixin",
-    "DivingChestplateBreakMixin"
+    "DivingChestplateBreakMixin",
+    "FishingHookTreasureMixin",
+    "FishingTreasureLootMixin"
   ],
   "client": [
     "CreateWorldScreenMixin"

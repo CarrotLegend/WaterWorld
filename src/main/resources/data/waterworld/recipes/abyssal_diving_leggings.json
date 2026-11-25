@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "AFA",
+    "A A",
+    "F F"
+  ],
+  "key": {
+    "A": {
+      "item": "waterworld:titanium_alloy_ingot"
+    },
+    "F": {
+      "item": "waterworld:carbon_fiber"
+    }
+  },
+  "result": {
+    "item": "waterworld:abyssal_diving_leggings",
+    "count": 1
+  }
+}
