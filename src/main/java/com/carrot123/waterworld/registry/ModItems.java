@@ -3,6 +3,7 @@ package com.carrot123.waterworld.registry;
 import com.carrot123.waterworld.item.ElectricEelGeneratorItem;
 import com.carrot123.waterworld.item.DivingInstrumentItem;
 import com.carrot123.waterworld.item.OxygenMachineItem;
+import com.carrot123.waterworld.item.RecyclingStationItem;
 import com.carrot123.waterworld.item.SeawaterFilterItem;
 import com.carrot123.waterworld.item.armor.DivingSuitItem;
 import com.carrot123.waterworld.item.armor.DivingSuitMaterial;
@@ -78,6 +79,6 @@ public class ModItems {
         event.register(Registries.ITEM, RECYCLING_HAMMER.getId(),
                 () -> new Item(new Item.Properties().stacksTo(1)));
         event.register(Registries.ITEM, ModBlocks.RECYCLING_STATION.getId(),
-                () -> new BlockItem(ModBlocks.RECYCLING_STATION.get(), new Item.Properties()));
+                () -> new RecyclingStationItem(ModBlocks.RECYCLING_STATION.get(), new Item.Properties()));
     }
 }

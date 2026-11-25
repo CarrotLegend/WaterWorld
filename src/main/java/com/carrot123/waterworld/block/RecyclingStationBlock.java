@@ -2,12 +2,15 @@ package com.carrot123.waterworld.block;
 
 import com.carrot123.waterworld.blockentity.RecyclingStationBlockEntity;
 import com.carrot123.waterworld.registry.ModItems;
+import java.util.List;
+import java.util.Locale;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -21,14 +24,22 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -36,14 +47,61 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class RecyclingStationBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    public static final double SURFACE_Y = 12.0D / 16.0D;
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final EnumProperty<Part> PART = EnumProperty.create("part", Part.class);
+    public static final double LEGACY_SURFACE_Y = 12.0D / 16.0D;
     private static final VoxelShape SHAPE = Shapes.or(box(0, 9, 0, 16, 12, 16),
             box(1, 0, 1, 4, 9, 4), box(12, 0, 1, 15, 9, 4),
             box(1, 0, 12, 4, 9, 15), box(12, 0, 12, 15, 9, 15));
+    private static final VoxelShape[] MAIN_SHAPES = tableShapes(2, 4);
+    private static final VoxelShape[] SECONDARY_SHAPES = tableShapes(12, 14);
 
     public RecyclingStationBlock(Properties properties) {
-        super(properties);
-        registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, false));
+        super(properties.pushReaction(PushReaction.BLOCK));
+        registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, false)
+                .setValue(FACING, Direction.NORTH).setValue(PART, Part.LEGACY));
+    }
+
+    public enum Part implements StringRepresentable {
+        LEGACY, MAIN, SECONDARY;
+
+        @Override
+        public String getSerializedName() {
+            return name().toLowerCase(Locale.ROOT);
+        }
+    }
+
+    public static BlockPos partnerPos(BlockPos pos, BlockState state) {
+        Direction across = state.getValue(FACING).getClockWise();
+        return pos.relative(state.getValue(PART) == Part.MAIN ? across : across.getOpposite());
+    }
+
+    public static boolean isPartner(BlockState own, BlockState other) {
+        Part part = own.getValue(PART);
+        return part != Part.LEGACY && own.is(other.getBlock()) && other.getValue(FACING) == own.getValue(FACING)
+                && other.getValue(PART) == (part == Part.MAIN ? Part.SECONDARY : Part.MAIN);
+    }
+
+    public static BlockState waterlog(BlockState state, Level level, BlockPos pos) {
+        return state.setValue(WATERLOGGED, level.getFluidState(pos).getType() == Fluids.WATER);
+    }
+
+    private static VoxelShape[] tableShapes(int legMin, int legMax) {
+        VoxelShape[] shapes = new VoxelShape[4];
+        VoxelShape base = Shapes.or(box(0, 6, 0, 16, 16, 16), box(legMin, 0, 0, legMax, 6, 16),
+                box(0, 0, 14, 16, 6, 16));
+        shapes[Direction.NORTH.get2DDataValue()] = base;
+        Direction facing = Direction.NORTH;
+        for (int turn = 1; turn < 4; turn++) {
+            VoxelShape previous = base;
+            VoxelShape[] rotated = {Shapes.empty()};
+            previous.forAllBoxes((x0, y0, z0, x1, y1, z1) ->
+                    rotated[0] = Shapes.or(rotated[0], Shapes.box(1 - z1, y0, x0, 1 - z0, y1, x1)));
+            base = rotated[0];
+            facing = facing.getClockWise();
+            shapes[facing.get2DDataValue()] = base;
+        }
+        return shapes;
     }
 
     @Override
@@ -58,18 +116,36 @@ public class RecyclingStationBlock extends BaseEntityBlock implements SimpleWate
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+        int direction = state.getValue(FACING).get2DDataValue();
+        return switch (state.getValue(PART)) {
+            case LEGACY -> SHAPE;
+            case MAIN -> MAIN_SHAPES[direction];
+            case SECONDARY -> SECONDARY_SHAPES[direction];
+        };
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(WATERLOGGED);
+        builder.add(WATERLOGGED, FACING, PART);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        FluidState fluid = context.getLevel().getFluidState(context.getClickedPos());
-        return defaultBlockState().setValue(WATERLOGGED, fluid.getType() == Fluids.WATER);
+        BlockState main = defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite())
+                .setValue(PART, Part.MAIN);
+        return waterlog(main, context.getLevel(), context.getClickedPos());
+    }
+
+    @Override
+    public BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+    }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return level.isClientSide || state.getValue(PART) == Part.LEGACY ? null
+                : createTickerHelper(type, com.carrot123.waterworld.registry.ModBlockEntities.RECYCLING_STATION.get(),
+                RecyclingStationBlockEntity::serverTick);
     }
 
     @Override
@@ -89,9 +165,15 @@ public class RecyclingStationBlock extends BaseEntityBlock implements SimpleWate
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
                                  InteractionHand hand, BlockHitResult hit) {
-        if (hand != InteractionHand.MAIN_HAND || !(level.getBlockEntity(pos) instanceof RecyclingStationBlockEntity station)) {
+        if (hand != InteractionHand.MAIN_HAND || !(level.getBlockEntity(pos) instanceof RecyclingStationBlockEntity member)) {
             return InteractionResult.PASS;
         }
+        RecyclingStationBlockEntity station = member.controller();
+        if (station == null) {
+            return InteractionResult.PASS;
+        }
+        BlockPos root = station.getBlockPos();
+        double surface = station.getBlockState().getValue(PART) == Part.LEGACY ? LEGACY_SURFACE_Y : 1.0D;
         ItemStack held = player.getItemInHand(hand);
         boolean insert = hit.getDirection() == Direction.UP && held.is(ModItems.SCRAP_IRON.get());
         boolean hammer = held.is(ModItems.RECYCLING_HAMMER.get());
@@ -107,37 +189,37 @@ public class RecyclingStationBlock extends BaseEntityBlock implements SimpleWate
             } else if (retrieve) {
                 ItemStack recovered = station.takeScrap();
                 player.getInventory().add(recovered);
-                drop(server, pos, recovered);
+                drop(server, root, surface, recovered);
             } else if (hammer && !station.takeScrap().isEmpty()) {
-                recycle(server, pos);
+                recycle(server, root, surface);
             }
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
-    private static void recycle(ServerLevel level, BlockPos pos) {
+    private static void recycle(ServerLevel level, BlockPos pos, double surface) {
         RandomSource random = level.getRandom();
         int ironNuggets = 1 + random.nextInt(2);
         boolean gold = random.nextFloat() < 0.5F;
         boolean iron = random.nextFloat() < 0.12F;
         boolean screw = random.nextFloat() < 0.25F;
-        drop(level, pos, new ItemStack(Items.IRON_NUGGET, ironNuggets));
+        drop(level, pos, surface, new ItemStack(Items.IRON_NUGGET, ironNuggets));
         if (gold) {
-            drop(level, pos, new ItemStack(Items.GOLD_NUGGET));
+            drop(level, pos, surface, new ItemStack(Items.GOLD_NUGGET));
         }
         if (iron) {
-            drop(level, pos, new ItemStack(Items.IRON_INGOT));
+            drop(level, pos, surface, new ItemStack(Items.IRON_INGOT));
         }
         if (screw) {
-            drop(level, pos, new ItemStack(ModItems.SCREW.get()));
+            drop(level, pos, surface, new ItemStack(ModItems.SCREW.get()));
         }
         level.playSound(null, pos, SoundEvents.ANVIL_HIT, SoundSource.BLOCKS, 0.45F, 1.1F);
     }
 
-    private static void drop(ServerLevel level, BlockPos pos, ItemStack stack) {
+    private static void drop(ServerLevel level, BlockPos pos, double surface, ItemStack stack) {
         if (!stack.isEmpty()) {
             ItemEntity entity = new ItemEntity(level, pos.getX() + 0.5D,
-                    pos.getY() + SURFACE_Y + 0.03D, pos.getZ() + 0.5D, stack);
+                    pos.getY() + surface + 0.03D, pos.getZ() + 0.5D, stack);
             entity.setDefaultPickUpDelay();
             level.addFreshEntity(entity);
         }
@@ -145,10 +227,24 @@ public class RecyclingStationBlock extends BaseEntityBlock implements SimpleWate
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState replacement, boolean moving) {
-        if (!state.is(replacement.getBlock()) && level instanceof ServerLevel server
+        if (level instanceof ServerLevel server && !level.restoringBlockSnapshots
+                && (!state.is(replacement.getBlock()) || state.getValue(PART) != replacement.getValue(PART)
+                || state.getValue(FACING) != replacement.getValue(FACING))
                 && level.getBlockEntity(pos) instanceof RecyclingStationBlockEntity station) {
-            drop(server, pos, station.clearForRemoval());
+            double surface = state.getValue(PART) == Part.LEGACY ? LEGACY_SURFACE_Y : 1.0D;
+            drop(server, pos, surface, station.clearForRemoval());
+            station.dismantle(server, state);
         }
         super.onRemove(state, level, pos, replacement, moving);
+    }
+
+    @Override
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
+        if (state.getValue(PART) == Part.LEGACY
+                || (params.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof RecyclingStationBlockEntity station
+                && station.mayDrop(params.getLevel()))) {
+            return super.getDrops(state, params);
+        }
+        return List.of();
     }
 }

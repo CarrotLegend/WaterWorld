@@ -1,14 +1,19 @@
 package com.carrot123.waterworld.blockentity;
 
 import com.carrot123.waterworld.block.ElectricEelGeneratorBlock;
+import com.carrot123.waterworld.entity.GeneratorEelEntity;
 import com.carrot123.waterworld.registry.ModBlockEntities;
+import com.carrot123.waterworld.registry.ModEntities;
 import java.util.UUID;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -23,6 +28,8 @@ public class ElectricEelGeneratorBlockEntity extends BlockEntity {
     private static final int CAPACITY = 1000;
     private static final int RATE = 20;
     private UUID pair;
+    @Nullable
+    private BlockPos lastEelPos;
     private int energy;
     private long outputTick = Long.MIN_VALUE;
     private int spent;
@@ -107,6 +114,9 @@ public class ElectricEelGeneratorBlockEntity extends BlockEntity {
         if (generator.isSecondary()) {
             return;
         }
+        if (partner != null) {
+            generator.maintainEel(server, partnerPos, state.getValue(ElectricEelGeneratorBlock.FACING));
+        }
         if (generator.energy < CAPACITY) {
             generator.energy = Math.min(CAPACITY, generator.energy + RATE);
             generator.setChanged();
@@ -122,6 +132,74 @@ public class ElectricEelGeneratorBlockEntity extends BlockEntity {
         }
     }
 
+    private void maintainEel(ServerLevel server, BlockPos secondaryPos, Direction facing) {
+        if (!canFindEel(server, secondaryPos)) {
+            return;
+        }
+        Entity existing = server.getEntity(pair);
+        if (existing instanceof GeneratorEelEntity eel && eel.belongsTo(worldPosition)) {
+            eel.anchorAt(secondaryPos, facing);
+            rememberEelPos(secondaryPos);
+            return;
+        }
+        if (existing != null || (lastEelPos != null && !canFindEel(server, lastEelPos))) {
+            return;
+        }
+        GeneratorEelEntity eel = ModEntities.GENERATOR_EEL.get().create(server);
+        if (eel != null) {
+            eel.setUUID(pair);
+            eel.attachTo(worldPosition);
+            eel.anchorAt(secondaryPos, facing);
+            if (server.addFreshEntity(eel)) {
+                rememberEelPos(secondaryPos);
+            }
+        }
+    }
+
+    private static boolean canFindEel(ServerLevel server, BlockPos pos) {
+        return server.areEntitiesLoaded(ChunkPos.asLong(pos)) && server.isPositionEntityTicking(pos);
+    }
+
+    private void rememberEelPos(BlockPos pos) {
+        if (!pos.equals(lastEelPos)) {
+            lastEelPos = pos.immutable();
+            setChanged();
+        }
+    }
+
+    private void discardEel(ServerLevel server) {
+        if (!isSecondary() && pair != null && server.getEntity(pair) instanceof GeneratorEelEntity eel
+                && eel.belongsTo(worldPosition)) {
+            eel.discard();
+        }
+    }
+
+    public static boolean isEelOrphaned(ServerLevel server, BlockPos primaryPos, GeneratorEelEntity eel) {
+        UUID pair = eel.getUUID();
+        GeneratorRemovalData removals = GeneratorRemovalData.get(server);
+        if (removals.contains(pair, primaryPos)) {
+            return true;
+        }
+        LevelChunk primaryChunk = loadedChunk(server, primaryPos);
+        if (primaryChunk == null) {
+            BlockPos eelPos = eel.blockPosition();
+            LevelChunk eelChunk = loadedChunk(server, eelPos);
+            return removals.contains(pair, eelPos) || (eelChunk != null
+                    && !(eelChunk.getBlockEntity(eelPos) instanceof ElectricEelGeneratorBlockEntity other
+                    && other.isSecondary() && pair.equals(other.pair) && !other.retiring
+                    && ElectricEelGeneratorBlock.partnerPos(eelPos, other.getBlockState()).equals(primaryPos)));
+        }
+        if (!(primaryChunk.getBlockEntity(primaryPos) instanceof ElectricEelGeneratorBlockEntity primary)
+                || primary.isSecondary() || !pair.equals(primary.pair) || !primary.isLive(server)) {
+            return true;
+        }
+        BlockState state = primary.getBlockState();
+        BlockPos secondaryPos = ElectricEelGeneratorBlock.partnerPos(primaryPos, state);
+        LevelChunk secondaryChunk = loadedChunk(server, secondaryPos);
+        return removals.contains(pair, secondaryPos)
+                || (secondaryChunk != null && primary.partner(secondaryChunk, secondaryPos, state) == null);
+    }
+
     public boolean mayDrop(ServerLevel server) {
         return pair != null && !retiring && !GeneratorRemovalData.get(server).contains(pair, worldPosition);
     }
@@ -130,6 +208,7 @@ public class ElectricEelGeneratorBlockEntity extends BlockEntity {
         if (pair == null || retiring) {
             return;
         }
+        discardEel(server);
         GeneratorRemovalData removals = GeneratorRemovalData.get(server);
         if (removals.contains(pair, worldPosition)) {
             retiring = true;
@@ -149,6 +228,7 @@ public class ElectricEelGeneratorBlockEntity extends BlockEntity {
     }
 
     private void removeSilently(ServerLevel server) {
+        discardEel(server);
         retiring = true;
         if (server.setBlock(worldPosition, getBlockState().getFluidState().createLegacyBlock(),
                 Block.UPDATE_ALL | Block.UPDATE_SUPPRESS_DROPS) && pair != null) {
@@ -234,6 +314,8 @@ public class ElectricEelGeneratorBlockEntity extends BlockEntity {
     public void load(CompoundTag tag) {
         super.load(tag);
         pair = tag.hasUUID("Pair") ? tag.getUUID("Pair") : null;
+        lastEelPos = !isSecondary() && tag.contains("LastEelPos", Tag.TAG_LONG)
+                ? BlockPos.of(tag.getLong("LastEelPos")) : null;
         if (!isSecondary()) {
             energy = Mth.clamp(tag.getInt("Energy"), 0, CAPACITY);
             outputTick = tag.contains("OutputTick") ? tag.getLong("OutputTick") : Long.MIN_VALUE;
@@ -248,6 +330,9 @@ public class ElectricEelGeneratorBlockEntity extends BlockEntity {
             tag.putUUID("Pair", pair);
         }
         if (!isSecondary()) {
+            if (lastEelPos != null) {
+                tag.putLong("LastEelPos", lastEelPos.asLong());
+            }
             tag.putInt("Energy", energy);
             tag.putLong("OutputTick", outputTick);
             tag.putInt("OutputSpent", spent);

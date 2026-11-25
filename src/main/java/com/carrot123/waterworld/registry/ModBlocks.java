@@ -45,7 +45,7 @@ public class ModBlocks {
         event.register(Registries.BLOCK, SEAWATER_FILTER.getId(), () -> new SeawaterFilterBlock(
                 BlockBehaviour.Properties.of().strength(3.0F, 5.0F).sound(SoundType.WOOD)));
         event.register(Registries.BLOCK, ELECTRIC_EEL_GENERATOR.getId(), () -> new ElectricEelGeneratorBlock(
-                BlockBehaviour.Properties.of().strength(4.0F, 6.0F).sound(SoundType.METAL)));
+                BlockBehaviour.Properties.of().strength(4.0F, 6.0F).sound(SoundType.METAL).noOcclusion()));
         event.register(Registries.BLOCK, RECYCLING_STATION.getId(), () -> new RecyclingStationBlock(
                 BlockBehaviour.Properties.of().strength(2.0F).sound(SoundType.WOOD).noOcclusion()));
         event.register(Registries.BLOCK, FISHING_BOX.getId(), () -> new FishingBoxBlock(false,
