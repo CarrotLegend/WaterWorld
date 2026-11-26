@@ -36,7 +36,6 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 
 public class FishingBoxBlockEntity extends BaseContainerBlockEntity {
-    private static final int FISHING_BOX_RANGE = 8;
     private final NonNullList<ItemStack> items = NonNullList.withSize(27, ItemStack.EMPTY);
     private final List<ItemStack> pending = new ArrayList<>();
     private int fishingTicks;
@@ -68,27 +67,24 @@ public class FishingBoxBlockEntity extends BaseContainerBlockEntity {
     }
 
     private static boolean hasClearFishingArea(ServerLevel level, BlockPos pos) {
-        int minX = pos.getX() - FISHING_BOX_RANGE;
-        int maxX = pos.getX() + FISHING_BOX_RANGE;
-        int minY = pos.getY() - FISHING_BOX_RANGE;
-        int maxY = pos.getY() + FISHING_BOX_RANGE;
-        int minZ = pos.getZ() - FISHING_BOX_RANGE;
-        int maxZ = pos.getZ() + FISHING_BOX_RANGE;
+        for (int x = -1; x <= 1; x++) {
+            for (int z = -1; z <= 1; z++) {
+                if (x == 0 && z == 0) {
+                    continue;
+                }
 
-        for (int chunkX = minX >> 4; chunkX <= (maxX >> 4); chunkX++) {
-            for (int chunkZ = minZ >> 4; chunkZ <= (maxZ >> 4); chunkZ++) {
-                LevelChunk chunk = level.getChunkSource().getChunkNow(chunkX, chunkZ);
+                BlockPos candidate = pos.offset(x, 0, z);
+                LevelChunk chunk = level.getChunkSource().getChunkNow(
+                        candidate.getX() >> 4,
+                        candidate.getZ() >> 4
+                );
+
                 if (chunk == null) {
                     return false;
                 }
-                for (BlockPos candidate : chunk.getBlockEntitiesPos()) {
-                    if (!pos.equals(candidate)
-                            && candidate.getX() >= minX && candidate.getX() <= maxX
-                            && candidate.getY() >= minY && candidate.getY() <= maxY
-                            && candidate.getZ() >= minZ && candidate.getZ() <= maxZ
-                            && chunk.getBlockState(candidate).getBlock() instanceof FishingBoxBlock) {
-                        return false;
-                    }
+
+                if (chunk.getBlockState(candidate).getBlock() instanceof FishingBoxBlock) {
+                    return false;
                 }
             }
         }
