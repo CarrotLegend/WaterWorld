@@ -2,17 +2,20 @@ package com.carrot123.waterworld.worldgen;
 
 import mcjty.lostcities.config.LostCityProfile;
 import mcjty.lostcities.config.LostCityProfileSetupImp;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.WorldDimensions;
 import net.minecraft.world.level.levelgen.presets.WorldPreset;
+import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.dimension.LevelStem;
 
 public class OceanWorld {
@@ -27,6 +30,7 @@ public class OceanWorld {
     public static final int SHALLOW_GROUND = 500;
     public static final int DEEP_GROUND = 100;
     private static final ResourceLocation LAYERED_ID = ResourceLocation.fromNamespaceAndPath("waterworld", "layered_ocean");
+    private static final ResourceKey<DimensionType> LAYERED_DIMENSION_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE, LAYERED_ID);
     public static final ResourceKey<WorldPreset> PRESET = ResourceKey.create(Registries.WORLD_PRESET, LAYERED_ID);
     public static final ResourceKey<NoiseGeneratorSettings> NOISE = ResourceKey.create(Registries.NOISE_SETTINGS,
             ResourceLocation.fromNamespaceAndPath("waterworld", "ocean_world"));
@@ -49,6 +53,17 @@ public class OceanWorld {
     public static boolean isLayered(Level level) {
         return level instanceof ServerLevel server && level.dimension().equals(Level.OVERWORLD)
                 && isLayered(server.getChunkSource().getGenerator());
+    }
+
+    public static Biome.Precipitation precipitationAt(Level level, Biome biome, BlockPos pos) {
+        Biome.Precipitation precipitation = biome.getPrecipitationAt(pos);
+        if (precipitation != Biome.Precipitation.SNOW) {
+            return precipitation;
+        }
+        boolean layered = level.isClientSide
+                ? level.dimension().equals(Level.OVERWORLD) && level.dimensionTypeId().equals(LAYERED_DIMENSION_TYPE)
+                : isLayered(level);
+        return layered ? Biome.Precipitation.RAIN : precipitation;
     }
 
     public static int sea(ChunkGenerator generator) {

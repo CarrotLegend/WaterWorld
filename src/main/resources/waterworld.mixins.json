@@ -20,13 +20,16 @@
     "DedicatedServerPropertiesMixin",
     "PlayerListMixin",
     "OceanSurfaceClimateMixin",
+    "OceanRainLevelMixin",
+    "OceanRainServerMixin",
     "HeatPurificationRecipeMixin",
     "DivingChestplateBreakMixin",
     "FishingHookTreasureMixin",
     "FishingTreasureLootMixin"
   ],
   "client": [
-    "CreateWorldScreenMixin"
+    "CreateWorldScreenMixin",
+    "OceanRainRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

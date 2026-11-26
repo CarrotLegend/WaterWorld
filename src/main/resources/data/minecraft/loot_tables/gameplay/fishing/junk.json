@@ -12,7 +12,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:cobblestone",
-          "weight": 10
+          "weight": 17
         },
         {
           "type": "minecraft:item",
@@ -22,7 +22,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:oak_sapling",
-          "weight": 2
+          "weight": 4
         },
         {
           "type": "minecraft:item",
@@ -63,18 +63,6 @@
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:ink_sac",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 10,
-              "add": false
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
           "name": "minecraft:wheat_seeds",
           "weight": 4
         },
@@ -96,8 +84,8 @@
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:rotten_flesh",
-          "weight": 10
+          "name": "waterworld:rubber",
+          "weight": 8
         }
       ],
       "rolls": 1

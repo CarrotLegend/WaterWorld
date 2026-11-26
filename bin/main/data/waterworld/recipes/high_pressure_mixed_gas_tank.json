@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "immersiveengineering"
+    }
+  ],
+  "category": "misc",
+  "pattern": [
+    " C ",
+    "TRT",
+    "LLL"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "T": {
+      "item": "waterworld:titanium_ingot"
+    },
+    "R": {
+      "item": "waterworld:rubber"
+    },
+    "L": {
+      "item": "immersiveengineering:ingot_aluminum"
+    }
+  },
+  "result": {
+    "item": "waterworld:high_pressure_mixed_gas_tank",
+    "count": 1
+  }
+}

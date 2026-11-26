@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " H ",
+    "ARA",
+    "FAF"
+  ],
+  "key": {
+    "H": {
+      "item": "waterworld:advanced_circuit_board"
+    },
+    "A": {
+      "item": "waterworld:titanium_alloy_ingot"
+    },
+    "R": {
+      "item": "waterworld:rubber"
+    },
+    "F": {
+      "item": "waterworld:carbon_fiber"
+    }
+  },
+  "result": {
+    "item": "waterworld:deep_sea_life_support_tank",
+    "count": 1
+  }
+}

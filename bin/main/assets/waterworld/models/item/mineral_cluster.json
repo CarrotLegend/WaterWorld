@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "waterworld:item/aluminum_ingot"
+    "layer0": "minecraft:item/raw_iron"
   }
 }

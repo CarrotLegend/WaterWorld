@@ -29,6 +29,10 @@ public class OceanSurfaceClimateMixin {
     @Inject(method = "shouldSnow(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Z",
             at = @At("HEAD"), cancellable = true, require = 1, allow = 1)
     private void waterworld$protectSeaSurfaceFromSnow(LevelReader reader, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
+        if (reader instanceof ServerLevel level && OceanWorld.isLayered(level)) {
+            cir.setReturnValue(false);
+            return;
+        }
         if (pos.getY() == OceanWorld.SEA + 1 && waterworld$isLayered(reader)) {
             BlockState below = reader.getBlockState(pos.below());
             if (below.getFluidState().is(FluidTags.WATER) || below.is(Blocks.ICE) || below.is(Blocks.FROSTED_ICE)) {

@@ -9,7 +9,7 @@
           "type": "minecraft:loot_table",
           "name": "minecraft:gameplay/fishing/junk",
           "quality": -2,
-          "weight": 40
+          "weight": 70
         },
         {
           "type": "minecraft:loot_table",
@@ -27,13 +27,13 @@
           ],
           "name": "minecraft:gameplay/fishing/treasure",
           "quality": 2,
-          "weight": 20
+          "weight": 10
         },
         {
           "type": "minecraft:loot_table",
           "name": "minecraft:gameplay/fishing/fish",
           "quality": -1,
-          "weight": 40
+          "weight": 20
         }
       ],
       "rolls": 1.0

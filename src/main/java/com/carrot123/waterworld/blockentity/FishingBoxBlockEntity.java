@@ -26,6 +26,8 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -34,6 +36,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 
 public class FishingBoxBlockEntity extends BaseContainerBlockEntity {
+    private static final int FISHING_BOX_RANGE = 8;
     private final NonNullList<ItemStack> items = NonNullList.withSize(27, ItemStack.EMPTY);
     private final List<ItemStack> pending = new ArrayList<>();
     private int fishingTicks;
@@ -50,7 +53,8 @@ public class FishingBoxBlockEntity extends BaseContainerBlockEntity {
             box.storePending();
             return;
         }
-        if (!box.hasSpace()) {
+        if (!state.getValue(BlockStateProperties.WATERLOGGED) || !box.hasSpace()
+                || !hasClearFishingArea(serverLevel, pos)) {
             return;
         }
         box.fishingTicks++;
@@ -61,6 +65,34 @@ public class FishingBoxBlockEntity extends BaseContainerBlockEntity {
         box.fishingTicks = 0;
         box.catchLoot(serverLevel, pos, ((FishingBoxBlock) state.getBlock()).isAdvanced());
         box.storePending();
+    }
+
+    private static boolean hasClearFishingArea(ServerLevel level, BlockPos pos) {
+        int minX = pos.getX() - FISHING_BOX_RANGE;
+        int maxX = pos.getX() + FISHING_BOX_RANGE;
+        int minY = pos.getY() - FISHING_BOX_RANGE;
+        int maxY = pos.getY() + FISHING_BOX_RANGE;
+        int minZ = pos.getZ() - FISHING_BOX_RANGE;
+        int maxZ = pos.getZ() + FISHING_BOX_RANGE;
+
+        for (int chunkX = minX >> 4; chunkX <= (maxX >> 4); chunkX++) {
+            for (int chunkZ = minZ >> 4; chunkZ <= (maxZ >> 4); chunkZ++) {
+                LevelChunk chunk = level.getChunkSource().getChunkNow(chunkX, chunkZ);
+                if (chunk == null) {
+                    return false;
+                }
+                for (BlockPos candidate : chunk.getBlockEntitiesPos()) {
+                    if (!pos.equals(candidate)
+                            && candidate.getX() >= minX && candidate.getX() <= maxX
+                            && candidate.getY() >= minY && candidate.getY() <= maxY
+                            && candidate.getZ() >= minZ && candidate.getZ() <= maxZ
+                            && chunk.getBlockState(candidate).getBlock() instanceof FishingBoxBlock) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     private void catchLoot(ServerLevel level, BlockPos pos, boolean advanced) {
