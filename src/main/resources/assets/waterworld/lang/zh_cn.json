@@ -14,7 +14,7 @@
   "block.waterworld.fishing_box": "捕鱼箱",
   "block.waterworld.advanced_fishing_box": "高级捕鱼箱",
   "tooltip.waterworld.fishing_box": "每10s进行一次打捞。",
-  "tooltip.waterworld.advanced_fishing_box": "每10s进行一次高质量打捞。",
+  "tooltip.waterworld.advanced_fishing_box": "每5s进行两次打捞。",
   "item.waterworld.atmospheric_diving_helmet": "常压潜水头盔",
   "item.waterworld.atmospheric_diving_chestplate": "常压潜水胸甲",
   "item.waterworld.atmospheric_diving_leggings": "常压潜水护腿",

@@ -56,13 +56,24 @@ public class FishingBoxBlockEntity extends BaseContainerBlockEntity {
                 || !hasClearFishingArea(serverLevel, pos)) {
             return;
         }
+
+        boolean advanced = ((FishingBoxBlock) state.getBlock()).isAdvanced();
+        int interval = advanced ? 100 : 200;
+
         box.fishingTicks++;
         box.setChanged();
-        if (box.fishingTicks < 200) {
+
+        if (box.fishingTicks < interval) {
             return;
         }
+
         box.fishingTicks = 0;
-        box.catchLoot(serverLevel, pos, ((FishingBoxBlock) state.getBlock()).isAdvanced());
+
+        int rolls = advanced ? 2 : 1;
+        for (int i = 0; i < rolls; i++) {
+            box.catchLoot(serverLevel, pos, advanced);
+        }
+
         box.storePending();
     }
 

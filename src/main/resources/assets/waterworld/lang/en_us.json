@@ -14,7 +14,7 @@
   "block.waterworld.fishing_box": "Fishing Box",
   "block.waterworld.advanced_fishing_box": "Advanced Fishing Box",
   "tooltip.waterworld.fishing_box": "Collects a catch every 10s.",
-  "tooltip.waterworld.advanced_fishing_box": "Collects a high-quality catch every 10s.",
+  "tooltip.waterworld.advanced_fishing_box": "Collects two catches every 5s.",
   "item.waterworld.atmospheric_diving_helmet": "Atmospheric Diving Helmet",
   "item.waterworld.atmospheric_diving_chestplate": "Atmospheric Diving Chestplate",
   "item.waterworld.atmospheric_diving_leggings": "Atmospheric Diving Leggings",

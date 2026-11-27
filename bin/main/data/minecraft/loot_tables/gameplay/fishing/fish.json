@@ -27,7 +27,7 @@
         {
           "type": "minecraft:item",
           "name": "waterworld:electric_eel",
-          "weight": 2
+          "weight": 10
         }
       ],
       "rolls": 1.0
